@@ -1,0 +1,1 @@
+export const redditURL = `https://www.reddit.com/r/fortnite/hot.json`;
