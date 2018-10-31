@@ -7,8 +7,8 @@ This is an experimental project. Given the current craze of fortnite I want to s
 ## to do
 - [x] cpu forking
 - [x] get images from r/fortnite
-- [ ] cache images with redis
-- [ ] set up cron job to call api every hour
+- [x] cache post data with redis
+- [x] set up cron job to call api every hour
 - [ ] compare cached images with new data, get new posts
 - [ ] post images on instagram
 

@@ -1,1 +1,1 @@
-export const redditURL = `https://www.reddit.com/r/fortnite/hot.json`;
+export const redditURL = `https://www.reddit.com/r/fortnite/new.json`;

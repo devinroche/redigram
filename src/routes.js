@@ -1,13 +1,19 @@
-const axios = require('axios')
-const redditURL = require('./config/constants');
+import axios from 'axios'
+import {redditURL} from './config/constants';
+import cache, {getAsync} from './config/cache';
+import {differenceOfArrs} from './config/utils';
 
-module.exports = (router) => {
+export default (router) => {
     router.get('/', async (req, res) => {
-        const {data: {data: {children}}} = await axios.get('https://www.reddit.com/r/fortnite/hot/.json');
-        let formatedData = children.filter(({data: {url}}) => {
-            return url.includes('.jpg') || url.includes('.png')
-        })
+        const redis_log = await getAsync('recent')
+        const {data: {data: {children}}} = await axios.get(redditURL);
+        let imgData = children.filter(({data: {url}}) => url.includes('.jpg') || url.includes('.png'))
 
-        return res.send(formatedData)
+        if(redis_log !== null) {
+            imgData = differenceOfArrs(imgData, redis_log)
+        }
+
+        cache.set('recent', JSON.stringify(imgData), 'EX', 1800);
+        return res.send(imgData)
     })
 }

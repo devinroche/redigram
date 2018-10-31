@@ -1,6 +1,7 @@
-const cluster = require('cluster');
-const express = require('express');
-const routes = require('./routes');
+import cluster from 'cluster';
+import express from 'express';
+import routes from './routes';
+import job from './config/cron'
 
 if (cluster.isMaster){
     let cpuCount = require('os').cpus().length
@@ -19,5 +20,6 @@ if (cluster.isMaster){
     app.use('/api', router);
 	app.listen(port, () => console.log(`Worker ${cluster.worker.id} running!`));
 
-	routes(router)
+    routes(router)
+    job.start()
 }
